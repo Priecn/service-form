@@ -1,12 +1,17 @@
 package com.ido.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "PROVINCE")
-public class Province {
+public class Province implements Serializable {
+
+    private static final Long serialVersionUID  = 545578265834234L;
 
     @Id
     private Integer id;
@@ -15,6 +20,7 @@ public class Province {
     private String name;
 
     @OneToMany(mappedBy = "province")
+    @JsonIgnore
     private Set<Address> addresses = new HashSet<>();
 
     public Integer getId() {

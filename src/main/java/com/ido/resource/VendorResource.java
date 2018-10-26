@@ -2,6 +2,7 @@ package com.ido.resource;
 
 import com.ido.entity.Vendor;
 import com.ido.model.VendorWithCompanyDetailsCommand;
+import com.ido.service.VendorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,13 +10,26 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/v1/vendor")
 public class VendorResource {
 
+    private VendorService vendorService;
+
+    public VendorResource(VendorService vendorService) {
+        this.vendorService = vendorService;
+    }
+
     @PostMapping("/save")
-    public ResponseEntity<Vendor> addVendor(@RequestBody Vendor vendor) {
-        return null;
+    public ResponseEntity<Vendor> addVendor(@RequestBody VendorWithCompanyDetailsCommand vendorCommand) {
+        Vendor vendor = vendorService.saveVendor(vendorCommand);
+        if(vendor != null)
+            return ResponseEntity.ok(vendor);
+        return ResponseEntity.badRequest().body(null);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<VendorWithCompanyDetailsCommand> getVendor(@PathVariable Long id) {
-        return null;
+    public ResponseEntity<Vendor> getVendor(@PathVariable Long id) {
+        Vendor vendor = vendorService.getVendor(id);
+
+        if(vendor != null)
+            return ResponseEntity.ok(vendor);
+        return ResponseEntity.badRequest().body(null);
     }
 }

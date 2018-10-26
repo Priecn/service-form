@@ -7,7 +7,7 @@ import java.io.Serializable;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Address implements Serializable {
 
-    private static final Long serialversionUID  = 1457826234658L;
+    private static final Long serialVersionUID  = 1457826234658L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "address_pk_table")

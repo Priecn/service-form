@@ -1,5 +1,7 @@
 package com.ido.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -9,7 +11,7 @@ import java.util.Set;
 @Table(name = "BUSINESS_SUB_CATEGORY")
 public class BusinessSubCategory implements Serializable {
 
-    private static final Long serialversionUID  = 1457826576558L;
+    private static final Long serialVersionUID  = 1457826576558L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "sub_category_pk_table")
@@ -27,10 +29,11 @@ public class BusinessSubCategory implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "CATEGORY_ID")
+    @JsonIgnore
     private BusinessCategory category;
 
     @ManyToMany(mappedBy = "subCategories")
-
+    @JsonIgnore
     private Set<Company> companies = new HashSet<>();
 
     public Integer getId() {

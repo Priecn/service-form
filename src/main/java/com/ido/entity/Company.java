@@ -1,5 +1,7 @@
 package com.ido.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -9,7 +11,7 @@ import java.util.Set;
 @Table(name = "Company")
 public class Company implements Serializable {
 
-    private static final Long serialversionUID  = 1424325782658L;
+    private static final Long serialVersionUID  = 1424325782658L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "company_pk_table")
@@ -23,6 +25,7 @@ public class Company implements Serializable {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "VENDOR_ID", nullable = false)
+    @JsonIgnore
     private Vendor vendor;
 
     @OneToOne(mappedBy = "company", cascade = CascadeType.ALL)

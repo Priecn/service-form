@@ -1,15 +1,17 @@
 package com.ido.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
 @Table(name="VENDOR")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Vendor implements Serializable {
 
-    private static final Long serialversionUID  = 14578265834234L;
+    private static final Long serialVersionUID  = 14578265834234L;
 
     @Id
     private Long id;
