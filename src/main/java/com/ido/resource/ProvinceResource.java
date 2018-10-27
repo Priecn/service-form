@@ -1,4 +1,4 @@
-package com.ido.service;
+package com.ido.resource;
 
 import com.ido.entity.Province;
 import com.ido.repository.ProvinceRepository;

@@ -16,7 +16,7 @@ public class VendorResource {
         this.vendorService = vendorService;
     }
 
-    @PostMapping("/save")
+    @PostMapping("/add")
     public ResponseEntity<Vendor> addVendor(@RequestBody VendorWithCompanyDetailsCommand vendorCommand) {
         Vendor vendor = vendorService.saveVendor(vendorCommand);
         if(vendor != null)

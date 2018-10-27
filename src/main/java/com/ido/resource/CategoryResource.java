@@ -1,4 +1,4 @@
-package com.ido.service;
+package com.ido.resource;
 
 import com.ido.entity.BusinessCategory;
 import com.ido.entity.BusinessSubCategory;

@@ -1,6 +1,7 @@
 package com.ido.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,6 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "BUSINESS_SUB_CATEGORY")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class BusinessSubCategory implements Serializable {
 
     private static final Long serialVersionUID  = 1457826576558L;

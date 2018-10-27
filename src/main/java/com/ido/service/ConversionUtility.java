@@ -41,33 +41,36 @@ public class ConversionUtility {
 
 
     /***************************UTILITY METHODS*********************************/
-    private Address getAddressFromInputObject(VendorWithCompanyDetailsCommand inputObj, Object vendorOrCompany, boolean isHomeAdderss) {
-        Address address = null;
-        if(isHomeAdderss) {
-            address = new HomeAddress();
-            ((HomeAddress)address).setVendor((Vendor) vendorOrCompany);
-        } else {
-            address = new OfficeAddress();
-            ((OfficeAddress)address).setCompany((Company) vendorOrCompany);
-        }
-
+    private HomeAddress getHomeAddressFromInputObject(VendorWithCompanyDetailsCommand inputObj, Vendor vendor) {
+        HomeAddress address = new HomeAddress();
         address.setAddressLine1(inputObj.getAddress().getAddressLine1());
-        address.setAddressLine2(inputObj.getAddress().getAddressLine1());
+        address.setAddressLine2(inputObj.getAddress().getAddressLine2());
         address.setCity(inputObj.getAddress().getCity());
         address.setPincode(inputObj.getAddress().getPincode());
         address.setState(inputObj.getAddress().getState());
-
-        /****************GET PROVINCE*****************/
-        System.out.println("VendorService:: ProvinceId: "+inputObj.getAddress().getProvinceId());
         Province province = provinceRepository.findById(inputObj.getAddress().getProvinceId()).get();
-        System.out.println("ProvinceRepo:: ProvinceId: "+inputObj.getAddress().getProvinceId());
         address.setProvince(province);
+        address.setVendor(vendor);
+        return address;
+    }
 
+    private OfficeAddress getOfficeAddressFromInputObject(VendorWithCompanyDetailsCommand inputObj, Company company) {
+        OfficeAddress address = new OfficeAddress();
+        address.setAddressLine1(inputObj.getCompany().getAddress().getAddressLine1());
+        address.setAddressLine2(inputObj.getCompany().getAddress().getAddressLine2());
+        address.setCity(inputObj.getCompany().getAddress().getCity());
+        address.setPincode(inputObj.getCompany().getAddress().getPincode());
+        address.setState(inputObj.getCompany().getAddress().getState());
+        Province province = provinceRepository.findById(inputObj.getCompany().getAddress().getProvinceId()).get();
+        address.setProvince(province);
+        address.setCompany(company);
         return address;
     }
 
     private Company getCompanyFromInputObject(VendorWithCompanyDetailsCommand inputObj) {
         Company company = new Company();
+
+        company.setName(inputObj.getCompany().getName());
 
         /*********************FETCHING & SETTING CATEGORY***************************/
         BusinessCategory category = categoryRepository
@@ -84,7 +87,7 @@ public class ConversionUtility {
 
         company.setSubCategories(subCategories);
 
-        company.setAddress((OfficeAddress) getAddressFromInputObject(inputObj, company, false));
+        company.setAddress(getOfficeAddressFromInputObject(inputObj, company));
         return company;
     }
 
@@ -99,7 +102,7 @@ public class ConversionUtility {
         vendor.setMobileNumber(inputObj.getMobileNumber());
         vendor.setVendorRegDate(inputObj.getVendorRegDate());
         vendor.setId(generateVendorId(inputObj));
-        vendor.setAddress((HomeAddress) getAddressFromInputObject(inputObj, vendor, true));
+        vendor.setAddress(getHomeAddressFromInputObject(inputObj, vendor));
 
         return vendor;
     }

@@ -1,6 +1,7 @@
 package com.ido.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,6 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Company")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Company implements Serializable {
 
     private static final Long serialVersionUID  = 1424325782658L;
@@ -23,6 +25,9 @@ public class Company implements Serializable {
             allocationSize = 1)
     private Long id;
 
+    @Column(name = "NAME")
+    private String name;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "VENDOR_ID", nullable = false)
     @JsonIgnore
@@ -36,9 +41,9 @@ public class Company implements Serializable {
     @JoinTable(
             name = "COMPANY_SUB_CATEGORY",
             joinColumns = {
-                    @JoinColumn(name = "SUB_CATEGORY_ID")
+                    @JoinColumn(name = "COMPANY_ID")
             }, inverseJoinColumns = {
-            @JoinColumn(name = "COMPANY_ID")
+            @JoinColumn(name = "SUB_CATEGORY_ID")
     })
     private Set<BusinessSubCategory> subCategories = new HashSet<>();
 
@@ -52,6 +57,14 @@ public class Company implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Vendor getVendor() {

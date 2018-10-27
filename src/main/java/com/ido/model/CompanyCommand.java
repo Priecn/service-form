@@ -7,6 +7,8 @@ public class CompanyCommand {
 
     private Long vendorId;
 
+    private String name;
+
     private OfficeAddressCommand address;
 
     private Set<Integer> subCategoryIds = new HashSet<>();
@@ -19,6 +21,14 @@ public class CompanyCommand {
 
     public void setVendorId(Long vendorId) {
         this.vendorId = vendorId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public OfficeAddressCommand getAddress() {
